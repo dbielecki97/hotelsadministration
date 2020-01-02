@@ -1,6 +1,6 @@
-/.idea
-/hotel/migrations
-/catering/migrations
-/reservation/migrations
-/service_request/migrations
-/worker/migrations
+/hotel/migrations/
+/catering/migrations/
+/reservation/migrations/
+/service_request/migrations/
+/worker/migrations/
+/.idea/
