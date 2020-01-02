@@ -36,6 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'hotel.apps.HotelConfig',
+    'reservation.apps.ReservationConfig',
+    'catering.apps.CateringConfig',
+    'service_request.apps.ServiceRequestConfig',
+    'worker.apps.WorkerConfig'
 ]
 
 MIDDLEWARE = [
