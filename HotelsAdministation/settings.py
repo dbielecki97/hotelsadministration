@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'reservation.apps.ReservationConfig',
     'catering.apps.CateringConfig',
     'service_request.apps.ServiceRequestConfig',
-    'worker.apps.WorkerConfig'
+    'employee.apps.EmployeeConfig',
+    'accounts.apps.AccountsConfig'
 ]
 
 MIDDLEWARE = [
@@ -118,3 +119,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
