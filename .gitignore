@@ -4,4 +4,4 @@
 /service_request/migrations/
 /employee/migrations/
 /.idea/
-#/venv/
+/venv/
