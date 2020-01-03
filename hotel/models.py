@@ -28,24 +28,23 @@ class Room(models.Model):
         return '{}: {}'.format(self.hotel, self.roomNumber)
 
 
-class Client(User):
-    name = models.CharField('Imię', max_length=50, null=False, blank=False)
-    surname = models.CharField('Surname', max_length=50, null=False, blank=False)
+class Client(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     phoneNumber = models.IntegerField("Numer kontaktowy", null=False, blank=False)
     address = models.ForeignKey('Address', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return '{}:{} {}'.format(self.username, self.name, self.surname)
+        return '{} {}'.format(self.user.first_name, self.user.last_name)
 
     class Meta:
         verbose_name = "client"
 
 
 class Address(models.Model):
-    city = models.CharField('Miasto', max_length=50, null=False, blank=False)
-    postalCode = models.CharField('Kod pocztowy', max_length=6, null=False, blank=False)
-    street = models.CharField('Ulica', max_length=50, null=False, blank=False)
-    houseNumber = models.CharField('Numer domu', max_length=10, null=False, blank=False)
+    city = models.CharField('Miasto', max_length=50, null=False, blank=True)
+    postalCode = models.CharField('Kod pocztowy', max_length=6, null=False, blank=True)
+    street = models.CharField('Ulica', max_length=50, null=False, blank=True)
+    houseNumber = models.CharField('Numer domu', max_length=10, null=False, blank=True)
 
     def __str__(self):
         return '{} {}, {}, {}'.format(self.street, self.houseNumber, self.city, self.postalCode)
