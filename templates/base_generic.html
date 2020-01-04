@@ -1,11 +1,27 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     {% block title %}<title>Hotel administration</title>{% endblock %}
     <meta charset="UTF-8">
+    {% block extra_head %}
+
+    {% endblock %}
 </head>
 <body>
-{% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}
+{% block sidebar %}
+    <nav>
+        <ul style="list-style: none">
+            {% if not user.is_authenticated %}
+                <li><a href={% url 'signup' %}>Zarejestruj</a></li>
+                <li><a href={% url 'login' %}>Zaloguj</a></li>
+            {% else %}
+                ({{ user }}) {{ user.first_name }} {{ user.last_name }}
+                <li><a href={% url 'logout' %}>Wyloguj</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}
 {% block content %}<!-- default content text (typically empty) -->{% endblock %}
 </body>
 </html>

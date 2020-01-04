@@ -1,0 +1,20 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}
+    <title>List of hotels</title>
+{% endblock %}
+
+{% block content %}
+
+    {% if hotel_list %}
+        <ul>
+            {% for hotel in hotel_list %}
+                <li><a href="{% url 'hotel detail' hotel.pk %}">{{ hotel }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h3>Nie ma hoteli!</h3>
+    {% endif %}
+
+
+{% endblock %}

@@ -13,14 +13,15 @@ class Receipt(models.Model):
     total = models.FloatField('Kwota', null=False, blank=True, default=0)
     paymentMethod = models.CharField('Metoda płatności',
                                      max_length=2, null=False, blank=False,
-                                     choices=PAYMENT_METHODS)
+                                     choices=PAYMENT_METHODS, default=CASH)
 
     def __str__(self):
         return 'Receipt {}'.format(self.pk)
 
 
 class Reservation(models.Model):
-    date = models.DateField('Data', null=False, blank=False)
+    start = models.DateField('Rozpoczęcie', null=False, blank=False)
+    length = models.IntegerField('Długość', null=False, blank=False)
     notes = models.TextField('Notatki', max_length=150, blank=True, null=False)
     isParkingSpotNeeded = models.BooleanField('Miejsce parkingowe', null=False, blank=False)
     client = models.ForeignKey('hotel.Client', on_delete=models.CASCADE, null=False, blank=False)

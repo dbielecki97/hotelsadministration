@@ -40,9 +40,8 @@ INSTALLED_APPS = [
     'catering.apps.CateringConfig',
     'service_request.apps.ServiceRequestConfig',
     'employee.apps.EmployeeConfig',
-    'accounts.apps.AccountsConfig'
+    'accounts.apps.AccountsConfig',
 ]
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -58,7 +57,7 @@ ROOT_URLCONF = 'HotelsAdministation.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join('reservation', 'widgets'), ]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -121,3 +120,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+LOGIN_REDIRECT_URL = '/'
