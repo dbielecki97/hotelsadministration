@@ -4,10 +4,23 @@ from django.db import models
 
 class Hotel(models.Model):
     name = models.CharField('Nazwa', max_length=50, null=False, blank=False)
-    address = models.ForeignKey('Address', null=False, blank=False, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
+
+
+class Address(models.Model):
+    city = models.CharField('Miasto', max_length=50, null=False, blank=True)
+    postalCode = models.CharField('Kod pocztowy', max_length=6, null=False, blank=True)
+    street = models.CharField('Ulica', max_length=50, null=False, blank=True)
+    houseNumber = models.CharField('Numer domu', max_length=10, null=False, blank=True)
+    hotel = models.ForeignKey('Hotel', on_delete=models.CASCADE, null=False, blank=False)
+
+    def __str__(self):
+        return '{} {}, {}, {}'.format(self.street, self.houseNumber, self.city, self.postalCode)
+
+    class Meta:
+        verbose_name_plural = "addresses"
 
 
 class Opinion(models.Model):
@@ -19,10 +32,20 @@ class Opinion(models.Model):
 
 
 class Room(models.Model):
-    hotel = models.ForeignKey('Hotel', blank=False, null=False, on_delete=models.CASCADE)
+    STANDARD = 'ST'
+    APARTAMENT = 'APT'
+    FAMILY = 'FAM'
+    ROOM_STANDARDS = [
+        (STANDARD, 'standard'),
+        (FAMILY, 'rodzinny'),
+        (APARTAMENT, 'apartament'),
+    ]
+
     numberOfBeds = models.IntegerField('Ilość łóżek', default=1, blank=False, null=False)
-    standard = models.CharField('Standard', max_length=50)
+    standard = models.CharField('Standard', max_length=3, choices=ROOM_STANDARDS, default=STANDARD)
     roomNumber = models.IntegerField('Numer pokoju', null=False, blank=False)
+    isAvailable = models.BooleanField('Dostępny', default=True)
+    hotel = models.ForeignKey('Hotel', on_delete=models.CASCADE, blank=False, null=False)
 
     def __str__(self):
         return '{}: {}'.format(self.hotel, self.roomNumber)
@@ -31,23 +54,9 @@ class Room(models.Model):
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phoneNumber = models.IntegerField("Numer kontaktowy", null=False, blank=False)
-    address = models.ForeignKey('Address', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return '{} {}'.format(self.user.first_name, self.user.last_name)
 
     class Meta:
         verbose_name = "client"
-
-
-class Address(models.Model):
-    city = models.CharField('Miasto', max_length=50, null=False, blank=True)
-    postalCode = models.CharField('Kod pocztowy', max_length=6, null=False, blank=True)
-    street = models.CharField('Ulica', max_length=50, null=False, blank=True)
-    houseNumber = models.CharField('Numer domu', max_length=10, null=False, blank=True)
-
-    def __str__(self):
-        return '{} {}, {}, {}'.format(self.street, self.houseNumber, self.city, self.postalCode)
-
-    class Meta:
-        verbose_name_plural = "addresses"

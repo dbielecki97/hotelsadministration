@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+{% block title %}
+    <title>Pokój {{ room }}</title>
+{% endblock %}
+
+{% block content %}
+    <h3>Szczegóły pokoju {{ room.roomNumber }}</h3>
+    <h4>Typ pokoju: {{ room.get_standard_display }}</h4>
+    <h4>Ilość łóżek: {{ room.numberOfBeds }}</h4>
+    <a href={% url 'reservation new' room.pk %}>Rezerwuj</a>
+{% endblock %}
