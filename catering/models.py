@@ -2,8 +2,6 @@ from django.db import models
 
 
 class Catering(models.Model):
-    total = models.FloatField('Kwota')
-    reservation = models.ForeignKey('reservation.Reservation', on_delete=models.CASCADE, null=False, blank=False)
     drinks = models.ManyToManyField('Drink')
     courses = models.ManyToManyField('Course')
 

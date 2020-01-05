@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+    <title>Rachunek</title>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Zapisz">
+    </form>
+{% endblock %}

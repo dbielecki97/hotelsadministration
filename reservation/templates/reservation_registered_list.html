@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+    <title>Zameldowania</title>
+{% endblock %}
+
+{% block content %}
+    <h3>Zameldowania</h3>
+    {% if reservation_list.count > 0 %}
+        <ul>
+            {% for reservation in reservation_list %}
+                <li>
+                    <a href={% url 'reservation detail' reservation.pk %}>Rezerwacja pokój
+                        nr.{{ reservation.room.roomNumber }}
+                        - {{ reservation.room.hotel }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h3>Nie masz żadnych zameldowań</h3>
+    {% endif %}
+
+{% endblock %}

@@ -1,6 +1,7 @@
-from django.urls import path
 from . import views
+from django.conf.urls import url
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    url(r'^new/(?P<pk>\d*)$', views.NewServiceRequest.as_view(), name='service request new'),
+    url(r'^$', views.home, name='home'),
 ]
