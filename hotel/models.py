@@ -46,6 +46,7 @@ class Room(models.Model):
     roomNumber = models.IntegerField('Numer pokoju', null=False, blank=False)
     isAvailable = models.BooleanField('Dostępny', default=True)
     hotel = models.ForeignKey('Hotel', on_delete=models.CASCADE, blank=False, null=False)
+    costPerNight = models.FloatField('Cena za noc', blank=False, null=False)
 
     def __str__(self):
         return '{}: {}'.format(self.hotel, self.roomNumber)

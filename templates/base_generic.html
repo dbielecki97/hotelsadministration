@@ -17,6 +17,9 @@
                 <li><a href={% url 'login' %}>Zaloguj</a></li>
             {% else %}
                 ({{ user }}) {{ user.first_name }} {{ user.last_name }}
+                <li><a href={% url 'hotel list' %}>Hotele</a></li>
+                <li><a href={% url 'reservation list' %}>Moje rezerwacje</a></li>
+                <li><a href={% url 'reservation registered list' %}>Zameldowania</a></li>
                 <li><a href={% url 'logout' %}>Wyloguj</a></li>
             {% endif %}
         </ul>

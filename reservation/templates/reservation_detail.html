@@ -1,0 +1,86 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+    <title>{{ reservation.room }}</title>
+{% endblock %}
+
+{% block extra_head %}
+    <style>
+        table, td, th {
+            border: 1px solid black;
+        }
+
+        td {
+            padding: 10px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    {% if not reservation.isRegistered %}
+        <h3>Reserwacja</h3>
+        <div>
+            <hr>
+            <h4>Rozpoczoczęcie: {{ reservation.start }}</h4>
+            <h4>Parking:
+                {% if reservation.isParkingSpotNeeded %}
+                    tak
+                {% else %}
+                    nie
+                {% endif %}
+            </h4>
+            <h4>Ilość dni: {{ reservation.length }}</h4>
+        </div>
+        <br>
+        <h3>Pokój {{ reservation.room.roomNumber }}</h3>
+        <div>
+            <hr>
+            <h4>Ilość łóżek: {{ reservation.room.numberOfBeds }}</h4>
+            <h4>Standard: {{ reservation.room.get_standard_display }}</h4>
+            <h4>Kosz za noc: {{ reservation.room.costPerNight }}zł</h4>
+        </div>
+        <br>
+    {% endif %}
+    <h3>Rachunek</h3>
+    <div>
+        <hr>
+        <h4>Sposób płatności: {{ reservation.receipt.get_paymentMethod_display }}
+            (<a href={% url 'receipt edit' reservation.receipt.pk %}>Edytuj</a>)
+        </h4>
+        <h4>Koszt zakwaterowania: {{ reservation.receipt.total }}zł</h4>
+        {% if reservation.isRegistered %}
+            <h4>Koszt cateringu: {{ reservation.receipt.cateringCosts }}zł</h4>
+        {% endif %}
+        <h4>Całkowity koszt: {{ reservation.receipt.total }}zł</h4>
+    </div>
+    <br>
+    {% if reservation.isRegistered %}
+        <h3>Catering</h3>
+        <hr>
+        <div>
+            <h4></h4>
+        </div>
+        <br>
+        <h3>Zgłoszenia serwisowe (<a href={% url 'service request new' reservation.room.pk %}>Nowe</a>)</h3>
+        <hr>
+        <div>
+            {% if service_requests.count > 0 %}
+                <table style="border-collapse: collapse">
+                    <tr>
+                        <td style="text-align: center">Data zgłoszenia</td>
+                        <td style=" text-align: center">Treść</td>
+                    </tr>
+                    {% for service_request in service_requests %}
+                        <tr>
+                            <td>{{ service_request.date }}</td>
+                            <td>{{ service_request.description }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <h4>Nic nie zgłosiłeś</h4>
+            {% endif %}
+
+        </div>
+    {% endif %}
+
+{% endblock %}

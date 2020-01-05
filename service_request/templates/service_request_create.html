@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+{% block title %}
+    <title>Nowe zgłoszenie</title>
+{% endblock %}
+
+{% block content %}
+    <form method="post" autocomplete="off" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button>Wyślij zgłoszenie</button>
+    </form>
+{% endblock %}

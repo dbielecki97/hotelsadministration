@@ -24,7 +24,7 @@ class HotelAvailableRooms(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['hotel'] = Hotel.objects.get(pk=self.kwargs['pk'])
-        context['available_rooms'] = Room.objects.filter(hotel=self.kwargs['pk'], isAvailable=True)
+        context['available_rooms'] = Room.objects.filter(hotel=self.kwargs['pk'], reservation__isRegistered__exact=True)
         return context
 
 
