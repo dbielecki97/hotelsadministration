@@ -17,7 +17,7 @@
 {% endblock %}
 {% block content %}
     {% if not reservation.isRegistered %}
-        <h3>Reserwacja</h3>
+        <h3>Reserwacja (<a href={% url 'reservation register' reservation.pk %}>Zamelduj się</a>)</h3>
         <div>
             <hr>
             <h4>Rozpoczoczęcie: {{ reservation.start }}</h4>
@@ -46,7 +46,10 @@
         <h4>Sposób płatności: {{ reservation.receipt.get_paymentMethod_display }}
             (<a href={% url 'receipt edit' reservation.receipt.pk %}>Edytuj</a>)
         </h4>
-        <h4>Koszt zakwaterowania: {{ reservation.receipt.total }}zł</h4>
+        <h4>Koszt zakwaterowania: {{ reservation.receipt.accomodationCost }}zł</h4>
+        {% if reservation.isParkingSpotNeeded %}
+            + 50zł za parking
+        {% endif %}
         {% if reservation.isRegistered %}
             <h4>Koszt cateringu: {{ reservation.receipt.cateringCosts }}zł</h4>
         {% endif %}
@@ -54,13 +57,19 @@
     </div>
     <br>
     {% if reservation.isRegistered %}
-        <h3>Catering</h3>
+        <h3>Catering <a href={% url 'catering food list' reservation.pk reservation.catering.pk %}>Zamów jedzenie</a>
+        </h3>
         <hr>
         <div>
-            <h4></h4>
+            {% for foodquantity in reservation.catering.foodquantity_set.all %}
+                <li>{{ foodquantity.foodItem.name }} - {{ foodquantity.quantity }}x {{ foodquantity.foodItem.price }}zł
+                </li>
+            {% endfor %}
+            <h4>Razem: {{ reservation.receipt.cateringCosts }}zł</h4>
         </div>
         <br>
-        <h3>Zgłoszenia serwisowe (<a href={% url 'service request new' reservation.room.pk %}>Nowe</a>)</h3>
+        <h3>Zgłoszenia serwisowe (<a href={% url 'service request new' reservation.pk %}>Nowe</a>)
+        </h3>
         <hr>
         <div>
             {% if service_requests.count > 0 %}
@@ -79,7 +88,6 @@
             {% else %}
                 <h4>Nic nie zgłosiłeś</h4>
             {% endif %}
-
         </div>
     {% endif %}
 

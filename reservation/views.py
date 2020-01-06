@@ -1,24 +1,19 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from catering.models import Catering
-from service_request.models import ServiceRequest
-from .forms import ReservationForm
-from django.urls import reverse_lazy, reverse
-from .models import Reservation, Receipt
 from hotel.models import Client
+from service_request.models import ServiceRequest
 from .forms import ReceiptForm
-
-
-def home(request):
-    return render(request, 'reservation_home.html')
+from .forms import ReservationForm
+from .models import Reservation, Receipt
 
 
 class NewReservation(generic.CreateView):
     form_class = ReservationForm
     template_name = 'reservation_new.html'
-    success_url = reverse_lazy('hotel list')
+    success_url = '/reservation/my/'
 
     def get_form_kwargs(self):
         kwargs = super(NewReservation, self).get_form_kwargs()
@@ -42,10 +37,11 @@ class ReservationDetail(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ReservationDetail, self).get_context_data(**kwargs)
-        if self.model.isRegistered:
+        if self.object.isRegistered:
             context['service_requests'] = ServiceRequest.objects.filter(
-                client=Client.objects.get(user=self.request.user)).order_by('-date')
-            return context
+                client=Client.objects.get(user=self.request.user), reservation=self.object).order_by(
+                '-date')
+        return context
 
 
 class PaymentMethodEdit(generic.UpdateView):

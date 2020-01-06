@@ -1,8 +1,18 @@
 from django.contrib import admin
 
-# Register your models here.
-from catering.models import Drink, Catering, Course
+from catering.models import Food, Catering, Category, FoodQuantity
 
-admin.site.register(Drink)
-admin.site.register(Course)
-admin.site.register(Catering)
+admin.site.register(Food)
+admin.site.register(Category)
+admin.site.register(FoodQuantity)
+
+
+class FoodQuantityTabular(admin.TabularInline):
+    model = FoodQuantity
+    extra = 0
+    fields = ('foodItem', 'quantity',)
+
+
+@admin.register(Catering)
+class CateringAdmin(admin.ModelAdmin):
+    inlines = (FoodQuantityTabular,)

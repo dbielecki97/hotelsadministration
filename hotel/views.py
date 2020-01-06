@@ -1,5 +1,6 @@
 # Create your views here.
 from django.views import generic
+
 from .models import Hotel, Room
 
 
@@ -14,17 +15,8 @@ class HotelDetail(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['available_rooms_count'] = Room.objects.filter(hotel=self.object, isAvailable=True).count()
-        return context
-
-
-class HotelAvailableRooms(generic.TemplateView):
-    template_name = 'available_rooms.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['hotel'] = Hotel.objects.get(pk=self.kwargs['pk'])
-        context['available_rooms'] = Room.objects.filter(hotel=self.kwargs['pk'], reservation__isRegistered__exact=True)
+        context['available_rooms_count'] = Room.objects.filter(hotel=context['hotel']).count()
+        context['available_rooms'] = Room.objects.filter(hotel=context['hotel'])
         return context
 
 

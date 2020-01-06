@@ -44,7 +44,6 @@ class Room(models.Model):
     numberOfBeds = models.IntegerField('Ilość łóżek', default=1, blank=False, null=False)
     standard = models.CharField('Standard', max_length=3, choices=ROOM_STANDARDS, default=STANDARD)
     roomNumber = models.IntegerField('Numer pokoju', null=False, blank=False)
-    isAvailable = models.BooleanField('Dostępny', default=True)
     hotel = models.ForeignKey('Hotel', on_delete=models.CASCADE, blank=False, null=False)
     costPerNight = models.FloatField('Cena za noc', blank=False, null=False)
 

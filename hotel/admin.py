@@ -14,7 +14,7 @@ class RoomTabular(admin.TabularInline):
     extra = 0
     fieldsets = ((
                      'Room', {
-                         'fields': ('roomNumber', 'standard', 'numberOfBeds', 'isAvailable',)
+                         'fields': ('roomNumber', 'standard', 'numberOfBeds', 'costPerNight',)
                      }),
     )
 

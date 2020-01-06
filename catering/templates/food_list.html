@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+{% block title %}
+    <title>Catering</title>
+{% endblock %}
+
+{% block content %}
+    <h3><a href={% url 'reservation detail' reservation.pk %}>Wróć</a></h3>
+    <form action="" method="get">
+        <div style="padding: 30px;margin-bottom: 20px;">
+            {{ filter.form }}
+            <button style="display: inline-block">Filtruj</button>
+        </div>
+    </form>
+    <br>
+    {% for food in filter.qs %}
+        <li style="padding: 10px 0;">{{ food.name }} - {{ food.price }}zł<a
+                href={% url 'catering add' reservation.pk catering_pk food.pk 1 %}>Zamów</a>
+        </li>
+    {% endfor %}
+
+    <br>
+    <hr>
+    <br>
+    <h3>Zamówione</h3>
+    {% for foodquantity in reservation.catering.foodquantity_set.all %}
+        <li>{{ foodquantity.foodItem.name }} - {{ foodquantity.quantity }}x {{ foodquantity.foodItem.price }}zł
+        </li>
+    {% endfor %}
+    <h4>Razem: {{ reservation.receipt.cateringCosts }}</h4>
+
+
+{% endblock %}
