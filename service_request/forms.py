@@ -1,6 +1,7 @@
 from django import forms
 
-from hotel.models import Client, Room
+from hotel.models import Client
+from reservation.models import Reservation
 from service_request.models import ServiceRequest
 
 
@@ -12,7 +13,7 @@ class NewServiceRequestForm(forms.ModelForm):
     def save(self, commit=True):
         service_request = super(NewServiceRequestForm, self).save(commit=False)
         service_request.client = Client.objects.get(user=self.user)
-        service_request.room = Room.objects.get(pk=self.pk)
+        service_request.reservation = Reservation.objects.get(pk=self.pk)
         service_request.save()
         return service_request
 

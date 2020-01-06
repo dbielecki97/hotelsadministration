@@ -6,9 +6,9 @@ from django.utils.timezone import now
 
 class ServiceRequest(models.Model):
     description = models.TextField('Opis problemu', max_length=150)
-    room = models.ForeignKey('hotel.Room', on_delete=models.CASCADE, null=False, blank=False)
     client = models.ForeignKey('hotel.Client', on_delete=models.SET_NULL, null=True, blank=False)
     date = models.DateTimeField('Data', null=False, blank=False, default=now)
+    reservation = models.ForeignKey('reservation.Reservation', on_delete=models.CASCADE, blank=False, null=False)
 
     def __str__(self):
         return 'Service request {}'.format(self.pk)

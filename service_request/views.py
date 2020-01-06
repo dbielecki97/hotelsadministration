@@ -11,7 +11,6 @@ def home(request):
 class NewServiceRequest(generic.CreateView):
     form_class = NewServiceRequestForm
     template_name = 'service_request_create.html'
-    success_url = '/'
 
     def get_form_kwargs(self):
         kwargs = super(NewServiceRequest, self).get_form_kwargs()

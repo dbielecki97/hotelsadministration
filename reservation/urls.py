@@ -1,4 +1,6 @@
 from django.conf.urls import url
+from django.views.generic import RedirectView
+
 from . import views
 
 urlpatterns = [
@@ -8,4 +10,4 @@ urlpatterns = [
     url(r'^my/$', views.ReservationList.as_view(), name='reservation list'),
     url(r'^my/(?P<pk>\d*)$', views.ReservationDetail.as_view(), name='reservation detail'),
     url(r'^new/(?P<pk>\d*)$', views.NewReservation.as_view(), name='reservation new'),
-    url(r'', views.home, name='reservation'), ]
+    url(r'', RedirectView.as_view(url='/')), ]

@@ -1,26 +1,28 @@
-from .models import Reservation
 from django import forms
+
+from catering.models import Catering
 from hotel.models import Client, Room
 from .models import Receipt
+from .models import Reservation
 
 
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
-        exclude = ('client', 'receipt', 'room',)
+        exclude = ('client', 'receipt', 'room', 'catering', 'isRegistered')
 
     def save(self, commit=True):
         reservation = super(ReservationForm, self).save(commit=False)
         client = Client.objects.get(user=self.user)
         room = Room.objects.get(pk=self.pk)
-        room.isAvailable = False
-        room.save()
         receipt = Receipt()
-        receipt.total = room.costPerNight * reservation.length
         receipt.save()
         reservation.client = client
         reservation.receipt = receipt
         reservation.room = room
+        catering = Catering()
+        catering.save()
+        reservation.catering = catering
         reservation.save()
         return reservation
 
