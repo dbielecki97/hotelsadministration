@@ -22,9 +22,8 @@ class FoodList(FilterView):
 def add_food_to_catering_order(request, reservation_pk, catering_pk, food_pk, quantity):
     food_item, created = Catering.objects.get(pk=catering_pk).foodquantity_set.get_or_create(
         foodItem=Food.objects.get(pk=food_pk))
-    if not created:
-        food_item.quantity += int(quantity)
-        food_item.save()
+    food_item.quantity = food_item.quantity + int(quantity) if food_item.quantity is not None else 1
+    food_item.save()
 
     Reservation.objects.get(pk=reservation_pk).receipt.update_costs()
 

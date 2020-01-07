@@ -9,7 +9,7 @@ from .models import Reservation
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
-        exclude = ('client', 'receipt', 'room', 'catering', 'isRegistered')
+        exclude = ('client', 'receipt', 'room', 'catering', 'isRegistered', 'isCheckedOut',)
 
     def save(self, commit=True):
         reservation = super(ReservationForm, self).save(commit=False)

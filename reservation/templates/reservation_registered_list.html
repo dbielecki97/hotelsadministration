@@ -9,7 +9,7 @@
         <ul>
             {% for reservation in reservation_list %}
                 <li>
-                    <a href={% url 'reservation detail' reservation.pk %}>Rezerwacja pokój
+                    <a href={% url 'reservation registered detail' reservation.pk %}>Rezerwacja pokój
                         nr.{{ reservation.room.roomNumber }}
                         - {{ reservation.room.hotel }}</a></li>
             {% endfor %}

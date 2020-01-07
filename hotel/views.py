@@ -1,7 +1,6 @@
-# Create your views here.
 from django.views import generic
 
-from .models import Hotel, Room
+from .models import Hotel, Room, Opinion
 
 
 class HotelList(generic.ListView):
@@ -23,3 +22,15 @@ class HotelDetail(generic.DetailView):
 class RoomDetail(generic.DetailView):
     model = Room
     template_name = 'room_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(RoomDetail, self).get_context_data(**kwargs)
+        context['hotel'] = Hotel.objects.get(pk=self.kwargs['hotel_pk'])
+        return context
+
+
+class CreateOpinion(generic.CreateView):
+    model = Opinion
+    template_name = 'create_opinion.html'
+    success_url = '/'
+    fields = ('message',)
