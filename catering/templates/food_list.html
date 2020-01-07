@@ -7,7 +7,7 @@
     <h3><a href={% url 'reservation detail' reservation.pk %}>Wróć</a></h3>
     <form action="" method="get">
         <div style="padding: 30px;margin-bottom: 20px;">
-            {{ filter.form }}
+            {{ filter.form.as_p }}
             <button style="display: inline-block">Filtruj</button>
         </div>
     </form>

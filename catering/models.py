@@ -4,7 +4,7 @@ from django.db import models
 class FoodQuantity(models.Model):
     foodItem = models.ForeignKey('Food', on_delete=models.CASCADE)
     catering = models.ForeignKey('Catering', on_delete=models.CASCADE)
-    quantity = models.IntegerField('Ilość')
+    quantity = models.IntegerField('Ilość', null=False, blank=False, default=0)
 
     class Meta:
         verbose_name_plural = 'food quantities'

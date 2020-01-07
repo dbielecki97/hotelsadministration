@@ -48,7 +48,12 @@ class PaymentMethodEdit(generic.UpdateView):
     model = Receipt
     form_class = ReceiptForm
     template_name = 'payment_method_edit.html'
-    success_url = reverse_lazy('reservation detail', kwargs={'pk': 1})
+
+    def get_form_kwargs(self):
+        kwargs = super(PaymentMethodEdit, self).get_form_kwargs()
+        self.success_url = reverse_lazy('reservation registered detail',
+                                        kwargs={'pk': self.kwargs['reservation_pk']})
+        return kwargs
 
 
 class RegisteredReservationList(generic.ListView):
@@ -57,7 +62,8 @@ class RegisteredReservationList(generic.ListView):
     ordering = ('start',)
 
     def get_queryset(self):
-        return Reservation.objects.filter(client=Client.objects.get(user=self.request.user), isRegistered__exact=True)
+        return Reservation.objects.filter(client=Client.objects.get(user=self.request.user), isRegistered__exact=True,
+                                          isCheckedOut__exact=True)
 
 
 def register(request, pk):
@@ -67,4 +73,11 @@ def register(request, pk):
     catering.save()
     reservation.catering = catering
     reservation.save()
-    return HttpResponseRedirect(reverse('reservation detail', kwargs={'pk': pk}))
+    return HttpResponseRedirect(reverse('reservation registered detail', kwargs={'pk': pk}))
+
+
+def check_out(request, pk):
+    reservation = Reservation.objects.get(pk=pk)
+    reservation.isCheckedOut = True
+    reservation.save()
+    return HttpResponseRedirect(reverse('hotel opinion', kwargs={'pk': pk}))

@@ -45,6 +45,7 @@ class Reservation(models.Model):
     receipt = models.ForeignKey('Receipt', on_delete=models.CASCADE, null=False, blank=False)
     catering = models.ForeignKey('catering.Catering', on_delete=models.SET_NULL, null=True, blank=False)
     isRegistered = models.BooleanField('Zameldowano', null=False, blank=False, default=False)
+    isCheckedOut = models.BooleanField('Wymeldowano', null=False, blank=False, default=False)
 
     def __str__(self):
         return 'Rezerwacja{} - {}'.format(self.pk, self.room)

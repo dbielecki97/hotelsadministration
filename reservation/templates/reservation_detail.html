@@ -43,9 +43,11 @@
     <h3>Rachunek</h3>
     <div>
         <hr>
-        <h4>Sposób płatności: {{ reservation.receipt.get_paymentMethod_display }}
-            (<a href={% url 'receipt edit' reservation.receipt.pk %}>Edytuj</a>)
-        </h4>
+        {% if reservation.isRegistered %}
+            <h4>Sposób płatności: {{ reservation.receipt.get_paymentMethod_display }}
+                (<a href={% url 'receipt edit' reservation.pk reservation.receipt.pk %}>Edytuj</a>)
+            </h4>
+        {% endif %}
         <h4>Koszt zakwaterowania: {{ reservation.receipt.accomodationCost }}zł</h4>
         {% if reservation.isParkingSpotNeeded %}
             + 50zł za parking
@@ -54,6 +56,13 @@
             <h4>Koszt cateringu: {{ reservation.receipt.cateringCosts }}zł</h4>
         {% endif %}
         <h4>Całkowity koszt: {{ reservation.receipt.total }}zł</h4>
+        {% if reservation.isRegistered %}
+            {% if reservation.receipt.paymentMethod != 'C' %}
+                <h3><a href={% url 'reservation checkout' reservation.pk %}>Wymelduj</a></h3>
+            {% else %}
+                <h3><a href="{% url 'reservation checkout' reservation.pk %}">Zapłać i wymelduj</a></h3>
+            {% endif %}
+        {% endif %}
     </div>
     <br>
     {% if reservation.isRegistered %}

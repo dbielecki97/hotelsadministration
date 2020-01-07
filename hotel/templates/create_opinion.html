@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+{% block title %}
+    <title>Opinia</title>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {{ form.as_p }}
+        <button>Wyślij</button>
+    </form>
+
+    <h3><a href={% url 'hotel list' %}>Nie chcę wydawać opinii</a></h3>
+{% endblock %}

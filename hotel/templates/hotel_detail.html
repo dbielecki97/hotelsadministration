@@ -12,7 +12,8 @@
         <ul>
             {% for available_room in available_rooms %}
                 <li>
-                    Pokój nr.{{ available_room.roomNumber }} <a href={% url 'hotel room' available_room.pk %}>Zobacz</a>
+                    Pokój nr.{{ available_room.roomNumber }}
+                    <a href={% url 'hotel room' hotel.pk available_room.pk %}>Zobacz</a>
                 </li>
             {% endfor %}
 
