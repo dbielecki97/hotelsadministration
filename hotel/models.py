@@ -25,7 +25,7 @@ class Address(models.Model):
 
 class Opinion(models.Model):
     message = models.TextField(max_length=150, blank=True, null=False)
-    hotel = models.ForeignKey('Hotel', on_delete=models.DO_NOTHING, blank=False, null=False)
+    hotel = models.ForeignKey('Hotel', on_delete=models.CASCADE, blank=False, null=False)
 
     def __str__(self):
         return 'Opinia{}'.format(self.pk)

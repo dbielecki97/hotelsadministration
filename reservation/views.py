@@ -63,7 +63,7 @@ class RegisteredReservationList(generic.ListView):
 
     def get_queryset(self):
         return Reservation.objects.filter(client=Client.objects.get(user=self.request.user), isRegistered__exact=True,
-                                          isCheckedOut__exact=True)
+                                          isCheckedOut__exact=False)
 
 
 def register(request, pk):
@@ -79,5 +79,6 @@ def register(request, pk):
 def check_out(request, pk):
     reservation = Reservation.objects.get(pk=pk)
     reservation.isCheckedOut = True
+    hotel = reservation.room.hotel
     reservation.save()
-    return HttpResponseRedirect(reverse('hotel opinion', kwargs={'pk': pk}))
+    return HttpResponseRedirect(reverse('hotel opinion', kwargs={'pk': hotel.pk}))
