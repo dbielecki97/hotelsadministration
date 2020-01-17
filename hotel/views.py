@@ -1,6 +1,7 @@
 from django.views import generic
 
-from .models import Hotel, Room, Opinion
+from .forms import CreateOpinionForm
+from .models import Hotel, Room
 
 
 class HotelList(generic.ListView):
@@ -30,7 +31,11 @@ class RoomDetail(generic.DetailView):
 
 
 class CreateOpinion(generic.CreateView):
-    model = Opinion
     template_name = 'create_opinion.html'
+    form_class = CreateOpinionForm
     success_url = '/'
-    fields = ('message',)
+
+    def get_form_kwargs(self):
+        kwargs = super(CreateOpinion, self).get_form_kwargs()
+        kwargs.update(self.kwargs)
+        return kwargs

@@ -4,7 +4,9 @@
 {% endblock %}
 
 {% block content %}
+    {{ hotel }}
     <form method="post">
+        {% csrf_token %}
         {{ form.as_p }}
         <button>Wyślij</button>
     </form>
